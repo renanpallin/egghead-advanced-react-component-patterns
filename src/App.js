@@ -4,23 +4,38 @@ import './App.css';
 
 import Switch from 'react-switch';
 
+class Toggle extends Component {
+    static defaultProps = { onToggle: () => {} };
+    state = { on: false };
+    toggle = () =>
+        this.setState(
+            ({ on }) => ({ on: !on }),
+            () => this.props.onToggle(this.state.on)
+        );
+    render() {
+        return (
+            <Switch
+                checked={this.state.on}
+                onChange={this.toggle}
+                id="normal-switch"
+            />
+        );
+    }
+}
+
 class App extends Component {
-    state = { checked: false };
     render() {
         return (
             <div className="App">
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                 </header>
-                <p className="App-intro">
+                <div className="App-intro">
+                    <h1>Compound Components</h1>
                     <div className="flex-center">
-                        <Switch
-                            checked={this.state.checked}
-                            onChange={checked => this.setState({ checked })}
-                            id="normal-switch"
-                        />
+                        <Toggle onToggle={on => console.log('toggle', on)} />
                     </div>
-                </p>
+                </div>
             </div>
         );
     }
