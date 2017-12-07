@@ -43,8 +43,11 @@ export default class RenderPropsPattern extends Component {
 This pattern consists of passing a functional component as props to render whatever you want.
 In this example we getting the 'on' and 'toggle' in the props of this functional component we're passing.
 
-High Order Components Pattern
+High Order Components Pattern odds
     - Name clash in HOC
     - Don't know from were a prop is comming from
     - Need to use the HOC everywhere
+
+Since Render Props is dynamic, we can take advantage of lifecycle and compose things just like react
+
  */
