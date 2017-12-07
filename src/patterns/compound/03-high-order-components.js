@@ -28,6 +28,23 @@ ToggleButton.contextTypes = {
     [TOGGLE_CONTEXT]: PropTypes.object.isRequired,
 };
 
+/*
+High Order Components
+This function allow other developers to write a component that interacts with our Toggle
+without exposing the context feature of react (similar to ReactRedux.connect).
+ */
+export function withToggle(Component) {
+    function Wrapper(props, context) {
+        const toggleContext = context[TOGGLE_CONTEXT];
+        return <Component {...toggleContext} {...props} />;
+    }
+    Wrapper.contextTypes = {
+        [TOGGLE_CONTEXT]: PropTypes.object.isRequired,
+    };
+
+    return Wrapper;
+}
+
 export default class Toggle extends Component {
     static Off = ToggleOff;
     static On = ToggleOn;
