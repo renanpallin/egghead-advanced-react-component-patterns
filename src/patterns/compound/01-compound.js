@@ -26,9 +26,8 @@ export default class Toggle extends Component {
             () => this.props.onToggle(this.state.on)
         );
     render() {
-        const children = React.Children.map(
-            this.props.children,
-            child => React.cloneElement(child, {
+        const children = React.Children.map(this.props.children, child =>
+            React.cloneElement(child, {
                 on: this.state.on,
                 toggle: this.toggle,
             })
@@ -36,3 +35,23 @@ export default class Toggle extends Component {
         return <div>{children}</div>;
     }
 }
+
+/*
+This works, but we can't put anywhere else but as first child of Toogle, so this is ok:
+    <Toggle onToggle={on => console.log('toggle', on)}>
+        <Toggle.On>on</Toggle.On>
+        <Toggle.Button />
+        <Toggle.Off>off</Toggle.Off>
+    </Toggle>
+
+and this is not:
+
+    <Toggle onToggle={on => console.log('toggle', on)}>
+        <Toggle.On>on</Toggle.On>
+        <Toggle.Button />
+        <div className="btn-off">
+            <Toggle.Off>off</Toggle.Off>
+        </div>
+    </Toggle>
+Off will not dissapear as we expected
+ */
