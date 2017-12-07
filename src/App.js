@@ -34,6 +34,9 @@ class App extends Component {
                     <Toggle01 onToggle={on => console.log('toggle', on)}>
                         <Toggle01.On>on</Toggle01.On>
                         <Toggle01.Button />
+                        {/* This puts two errors on the console. cousa div is receiving
+                            the props passed by React.cloneElement in children
+                            @see 01 */}
                         <div className="btn-off">
                             <Toggle01.Off>off</Toggle01.Off>
                         </div>

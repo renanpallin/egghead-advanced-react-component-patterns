@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 const TOGGLE_CONTEXT = '__toggle__';
 
-const ToggleOn = withToggle(({ toggle: { on }, children }) => (on ? children : null));
-const ToggleOff = withToggle(({ toggle: { on }, children }) => (on ? null : children));
-const ToggleButton = withToggle(({ toggle: { on, toggle}, ...props }) => (
+const ToggleOn = ({ toggle: { on }, children }) => (on ? children : null);
+const ToggleOff = ({ toggle: { on }, children }) => (on ? null : children);
+const ToggleButton = ({ toggle: { on, toggle}, ...props }) => (
     <Switch checked={on} onChange={toggle} {...props} />
-));
+);
 
 /*
 Namespaced with 'toggle' props
@@ -22,6 +22,8 @@ export function withToggle(Component) {
         [TOGGLE_CONTEXT]: PropTypes.object.isRequired,
     };
 
+    /* Better names in React Dev Tools and in erros */
+    Wrapper.displayName = `withToggle(${Component.displayName || Component.name})`
     return Wrapper;
 }
 
@@ -31,9 +33,9 @@ export const MyEventComponent = withToggle(({ toggle, on, event }) => {
 });
 
 export default class Toggle extends Component {
-    static Off = ToggleOff;
-    static On = ToggleOn;
-    static Button = ToggleButton;
+    static Off = withToggle(ToggleOff);
+    static On = withToggle(ToggleOn);
+    static Button = withToggle(ToggleButton);
     static defaultProps = { onToggle: () => {} };
     static childContextTypes = {
         [TOGGLE_CONTEXT]: PropTypes.object.isRequired,
@@ -59,3 +61,8 @@ export default class Toggle extends Component {
         return <div>{this.props.children}</div>;
     }
 }
+
+/*
+Aditional: To improve the error messages and the tree in React Dev Tools,
+we're putting displayName property on the wrapper of our HOC and using then in the static declaration in the class to keep the name of the const used.
+ */
