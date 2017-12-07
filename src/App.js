@@ -6,10 +6,13 @@ import Lesson from './Lesson';
 import Toggle01 from './patterns/compound/01-compound';
 import Toggle02 from './patterns/compound/02-flexible-compound';
 import Toggle03, { withToggle as withToggle3 } from './patterns/compound/03-high-order-components';
-import Toggle04, { withtoggle as withToggle4, MyEventComponent } from './patterns/compound/04-avoiding-namespaces-clash-with-hoc';
+import Toggle04, { withToggle as withToggle4, MyEventComponent } from './patterns/compound/04-avoiding-namespaces-clash-with-hoc';
 
 /* Outside of our API. Makes sense with Toggle03 */
-const MyToggleButton = withToggle3(({ on, toggle }) => (
+const MyToggleButton3 = withToggle3(({ on, toggle }) => (
+    <button onClick={toggle}>{on ? 'on' : 'off'}</button>
+));
+const MyToggleButton4 = withToggle4(({toggle: { on, toggle }}) => (
     <button onClick={toggle}>{on ? 'on' : 'off'}</button>
 ));
 
@@ -57,7 +60,7 @@ class App extends Component {
                             <Toggle03.Off>off</Toggle03.Off>
                         </div>
                         {/* A custom button outside the Toggle API */}
-                        <MyToggleButton />
+                        <MyToggleButton3 />
                     </Toggle03>
                 </Lesson>
 
@@ -75,7 +78,7 @@ class App extends Component {
                         </div>
                         <hr/>
                         {/* A custom button outside the Toggle API */}
-                        <MyToggleButton />
+                        <MyToggleButton4 />
                         <hr/>
                         <MyEventComponent
                             event="onClick"

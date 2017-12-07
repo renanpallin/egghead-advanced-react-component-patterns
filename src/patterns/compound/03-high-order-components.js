@@ -72,9 +72,10 @@ on and toggle props in. What about they expecting another thing in the on props?
 Works until we use our HOC, let's say that this component wants to appear only with toggle on.
 We connect with our HOC and there's a clash in the 'on' props.
 Let's namespace our injected props.
- */
 
 function MyEventComponent({ on, event }) {
     const props = { [event]: on };
     return <button {...props}>The {event} event</button>;
 }
+ */
+
