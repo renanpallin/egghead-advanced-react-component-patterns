@@ -8,6 +8,8 @@ import Toggle02 from './patterns/compound/02-flexible-compound';
 import Toggle03, { withToggle as withToggle3 } from './patterns/compound/03-high-order-components';
 import Toggle04, { withToggle as withToggle4, MyEventComponent } from './patterns/compound/04-avoiding-namespaces-clash-with-hoc';
 
+import RenderPropsPattern from './patterns/compound/07-render-props-pattern';
+
 /* Outside of our API. Makes sense with Toggle03 */
 const MyToggleButton3 = withToggle3(({ on, toggle }) => (
     <button onClick={toggle}>{on ? 'on' : 'off'}</button>
@@ -88,6 +90,10 @@ class App extends Component {
                             on={e => alert(e.type)}
                         />
                     </Toggle04>
+                </Lesson>
+
+                <Lesson title="Render Props Pattern">
+                    <RenderPropsPattern />
                 </Lesson>
             </div>
         );
