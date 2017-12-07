@@ -21,6 +21,11 @@ export function withToggle(Component) {
     };
     Wrapper.displayName = `withToggle(${Component.displayName || Component.name})`
     Wrapper.OriginalComponent = Component; // This line @see comment below
+
+    /*
+    Note about keep the static props of original component in wrapper:
+    There's a library called hoistNonReactStatics(<wrapper>, <component>)
+     */
     return Wrapper;
 }
 
@@ -66,4 +71,12 @@ empty.
 So to improve unit testing, this file refactor the HOC with a property on the
 wrapper that holds a reference to the original component so it can be used in
 this cases.
+
+Keeping the static props in HOC:
+Let's say you put a 'static ToggleMessage' in MyEventComponent or in some component
+that uses the withToggle HOC. You can't use the MyEventComponent.ToggleMessage becouse
+this static property is on the OriginalComponent and you're trying to access in the Wrapper.
+The hoistNonReactStatics(<wrapper>, <component>) library pass all the static of your component
+to the wrapper that is not from React, like contextProps and defaultProps, that you don't wanna
+to pass.
  */
