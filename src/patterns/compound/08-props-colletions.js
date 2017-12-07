@@ -51,4 +51,11 @@ export default class RenderPropsPattern extends Component {
 /*
 Let's say all the buttons needs to have 'aria-expanded' with the value of the state. To not repeat you can pass a list of props that all butons need to have in your render.
 Who wants to implement a custom button or switch can simply apply the {...toggleProps}.
+
+
+Problem: What if you want your button to implement another onClick, but keeping the onClick passed in toggleProps?
+Like:
+
+<MyAwsomeeButton on={on} toggle={toggle} {...toggleProps} onClick={...}/>
+Next, let's compose this props with same name.
  */
