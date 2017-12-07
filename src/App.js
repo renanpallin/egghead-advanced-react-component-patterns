@@ -5,10 +5,11 @@ import Lesson from './Lesson';
 
 import Toggle01 from './patterns/compound/01-compound';
 import Toggle02 from './patterns/compound/02-flexible-compound';
-import Toggle03, { withToggle } from './patterns/compound/03-high-order-components';
+import Toggle03, { withToggle as withToggle3 } from './patterns/compound/03-high-order-components';
+import Toggle04, { withtoggle as withToggle4, MyEventComponent } from './patterns/compound/04-avoiding-namespaces-clash-with-hoc';
 
 /* Outside of our API. Makes sense with Toggle03 */
-const MyToggleButton = withToggle(({ on, toggle }) => (
+const MyToggleButton = withToggle3(({ on, toggle }) => (
     <button onClick={toggle}>{on ? 'on' : 'off'}</button>
 ));
 
@@ -64,9 +65,28 @@ class App extends Component {
                 <br/>
                 <br/>
                 <br/>
+                <Lesson title="Avoinding namespaces clash with HOC">
+                    <Toggle04 onToggle={on => console.log('toggle', on)}>
+                        <Toggle04.On>on</Toggle04.On>
+                        {/* Original toggle button from our API */}
+                        <Toggle04.Button />
+                        <div className="btn-off">
+                            <Toggle04.Off>off</Toggle04.Off>
+                        </div>
+                        <hr/>
+                        {/* A custom button outside the Toggle API */}
+                        <MyToggleButton />
+                        <hr/>
+                        <MyEventComponent
+                            event="onClick"
+                            on={e => alert(e.type)}
+                        />
+                    </Toggle04>
+                </Lesson>
             </div>
         );
     }
 }
+
 
 export default App;

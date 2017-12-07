@@ -4,15 +4,9 @@ import PropTypes from 'prop-types';
 
 const TOGGLE_CONTEXT = '__toggle__';
 
-/*
-Our internal components were refactored using our HOC component.
-Now they don't give a fuck about the context API.
- */
-const ToggleOn = withToggle(({ on, children }) => (on ? children : null));
-const ToggleOff = withToggle(({ on, children }) => (on ? null : children));
-const ToggleButton = withToggle(({ on, toggle, ...props }) => (
-    <Switch checked={on} onChange={toggle} {...props} />
-));
+const ToggleOn = withToggle(({ on, children }) => on ? children : null)
+const ToggleOff = withToggle(({ on, children }) => on ? null : children)
+const ToggleButton = withToggle(({ on, toggle, ...props }) =>  <Switch checked={on} onChange={toggle} {...props} />);
 
 /*
 High Order Components
@@ -29,6 +23,11 @@ export function withToggle(Component) {
     };
 
     return Wrapper;
+}
+
+export function MyEventComponent({ on, event }) {
+    const props = { [event]: on };
+    return <button {...props}>The {event} event</button>;
 }
 
 export default class Toggle extends Component {
@@ -61,20 +60,3 @@ export default class Toggle extends Component {
     }
 }
 
-/*
-Next: What if have a outside component that wants to use our HOC; we're injecting the
-on and toggle props in. What about they expecting another thing in the on props? Like:
-
-<MyEventComponent
-    event="onClick"
-    on={e => alert(e.type)}
-/>
-Works until we use our HOC, let's say that this component wants to appear only with toggle on.
-We connect with our HOC and there's a clash in the 'on' props.
-Let's namespace our injected props.
- */
-
-function MyEventComponent({ on, event }) {
-    const props = { [event]: on };
-    return <button {...props}>The {event} event</button>;
-}
