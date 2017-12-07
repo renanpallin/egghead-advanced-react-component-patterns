@@ -46,11 +46,12 @@ class App extends Component {
                     </Toggle02>
                 </Lesson>
 
+                <h5>::::: Exposing the API with HOC ::::::::::::::::::::::::</h5>
                 <Lesson title="High order components">
                     <Toggle03 onToggle={on => console.log('toggle', on)}>
                         <Toggle03.On>on</Toggle03.On>
                         {/* Original toggle button from our API */}
-                        {/*<Toggle03.Button />*/}
+                        <Toggle03.Button />
                         <div className="btn-off">
                             <Toggle03.Off>off</Toggle03.Off>
                         </div>

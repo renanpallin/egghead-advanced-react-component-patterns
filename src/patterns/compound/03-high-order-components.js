@@ -4,29 +4,13 @@ import PropTypes from 'prop-types';
 
 const TOGGLE_CONTEXT = '__toggle__';
 
-function ToggleOn({ children }, context) {
-    const { on } = context[TOGGLE_CONTEXT];
-    return on ? children : null;
-}
-ToggleOn.contextTypes = {
-    [TOGGLE_CONTEXT]: PropTypes.object.isRequired,
-};
-
-function ToggleOff({ children }, context) {
-    const { on } = context[TOGGLE_CONTEXT];
-    return on ? null : children;
-}
-ToggleOff.contextTypes = {
-    [TOGGLE_CONTEXT]: PropTypes.object.isRequired,
-};
-
-function ToggleButton(props, context) {
-    const { on, toggle } = context[TOGGLE_CONTEXT];
-    return <Switch checked={on} onChange={toggle} {...props} />;
-}
-ToggleButton.contextTypes = {
-    [TOGGLE_CONTEXT]: PropTypes.object.isRequired,
-};
+/*
+Our internal components were refactored using our HOC component.
+Now they don't give a fuck about the context API.
+ */
+const ToggleOn = withToggle(({ on, children }) => on ? children : null)
+const ToggleOff = withToggle(({ on, children }) => on ? null : children)
+const ToggleButton = withToggle(({ on, toggle, ...props }) =>  <Switch checked={on} onChange={toggle} {...props} />);
 
 /*
 High Order Components
@@ -74,25 +58,3 @@ export default class Toggle extends Component {
         return <div>{this.props.children}</div>;
     }
 }
-
-/*
-Since we're receiving the on and onToggle from context and not from props cloning element enymore,
-we are allowed to put anywhere we want, even if is not the first child
-    <Toggle onToggle={on => console.log('toggle', on)}>
-        <Toggle.On>on</Toggle.On>
-        <Toggle.Button />
-        <div className="btn-off">
-            <Toggle.Off>off</Toggle.Off>
-        </div>
-    </Toggle>
-This works as expected
-
-
-Next: What if we want to create another toggle button, outside of our API?
-like
-const MyToggle = ({on, toggle}) => (
-    <button onClick={toggle}>
-        { on ? 'on' : 'off' }
-    </button>
-);
- */
